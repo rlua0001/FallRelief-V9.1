@@ -1,0 +1,177 @@
+﻿@model  RiskAssessment.Models.RiskLevelModel
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fall Relief</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="~/Content/open-iconic-bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/animate.css" rel="stylesheet" />
+    <link href="~/Content/owl.carousel.min.css" rel="stylesheet" />
+    <link href="~/Content/owl.theme.default.min.css" rel="stylesheet" />
+
+    <link href="~/Content/magnific-popup.css" rel="stylesheet" />
+    <link href="~/Content/aos.css" rel="stylesheet" />
+
+    <link href="~/Content/ionicons.min.css" rel="stylesheet" />
+
+    <link href="~/Content/flaticon.css" rel="stylesheet" />
+
+    <link href="~/Content/icomoon.css" rel="stylesheet" />
+
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <style>
+        .collapsible {
+            background-color: #777;
+            color: white;
+            cursor: pointer;
+            padding: 18px;
+            width: 60%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+            margin: 10px 10px 15px 10px;
+        }
+
+            .active, .collapsible:hover {
+                background-color: #555;
+            }
+
+            .collapsible:after {
+                content: '\002B';
+                color: white;
+                font-weight: bold;
+                float: right;
+                margin-left: 5px;
+            }
+
+        .active:after {
+            content: "\2212";
+        }
+
+        .content {
+            padding: 0 18px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            width: 60%;
+        }
+
+        img {
+            width: 100%;
+            height: 200px;
+        }
+
+        .content-container {
+            text-align: center;
+        }
+
+        .container-fluid {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar px-md-0 navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-dark" id="ftco-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="/Home/Index">Fall Relief </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="oi oi-menu"></span> Menu
+            </button>
+
+            <div class="collapse navbar-collapse" id="ftco-nav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a href="/Home/Index" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="/Home/Assessment" class="nav-link">Assessment</a></li>
+                    <li class="nav-item"><a href="/Home/Health Facility" class="nav-link">Health Facility</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <div class="container-fluid">
+        <div class="title">
+            <h1>Assessment Result</h1>
+            <p>
+                @ViewBag.AssessmentType
+            </p>
+            <p>Your score is: @ViewBag.RiskScore</p>
+            <p>Risk Level:@ViewBag.RiskLevel</p>
+        </div>
+    </div>
+
+
+
+
+
+    @* <div>
+            @for (int i = 0; i < Model.RiskList.Count; i++)
+            {
+
+                <span style="color: red">@Html.Raw(Model.RiskList[i].RiskName)"</span>
+                <br />
+                <br />
+                <span style="color: blue">@Html.Raw(Model.RiskList[i].RiskStatement)"</span>
+                <img src="@Html.Raw(Model.RiskList[i].ImgDir)" />
+
+            }
+
+
+        </div>*@
+
+    <div class="container">
+        @for (int i = 0; i < Model.RiskList.Count; i++)
+        {
+
+            <button class="collapsible">
+                @Html.Raw(Model.RiskList[i].RiskName)
+            </button>
+            <div class="content">
+                <p>@Html.Raw(Model.RiskList[i].RiskStatement)</p>
+
+                <img src="@Html.Raw(Model.RiskList[i].ImgDir)" />
+            </div>
+        }
+    </div>
+    <br />
+    <br />
+    <div class="container">
+        @using (Html.BeginForm("ActionPlan", "Home", FormMethod.Post))
+        {
+
+            <input type="hidden" name="SessionID" value="@(Session["SessionID"])" />
+            <button type="Submit" class="btn btn-primary">Proceed</button>
+
+        }
+
+    </div>
+
+
+
+    <script>
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                }
+            });
+        }
+    </script>
+
+
+
+</body>
+</html>
